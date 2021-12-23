@@ -12,4 +12,15 @@
 .textoSelect{
   color: tomato;
 }
-
+.w-ancho{
+  width: 4rem;
+}
+.lineado{
+  line-height : 15px;
+}
+.marca{
+  color: gray;
+}
+.price{
+  color: green;
+}
