@@ -7,9 +7,9 @@ export const loginReducer = (state={},action) => {
                 ...state,
                 id: action.payload.id,
                 name: action.payload.displayname,
-                image: action.payload.photoURL,
-                telephone: action.payload.phoneNumber
             }
+            case types.logout:
+            return { }
 
             default:
                 return state

@@ -1,0 +1,26 @@
+.botoInicioS{
+    background-color: #f3cf77 !important;
+    
+    color: black !important;
+}
+.botoInicioS:hover{
+    background-color: #f3cf77;
+    border: solid #ec9943;
+    color: black;
+
+}
+.botoInicioS:active{
+    background-color: #f3cf77;
+   
+    color: black;
+}
+.poiter{
+    cursor: pointer;
+}
+.poiter:hover{
+opacity: 0.5;}
+
+.danger{
+    color: red;
+    font-size: 12px;
+}

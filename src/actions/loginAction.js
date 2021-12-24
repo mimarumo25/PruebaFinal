@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, signInWithPopup } from "@firebase/auth"
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "@firebase/auth"
 import Swal from "sweetalert2"
 
 import { facebook, google } from "../firebase/firebase"
@@ -10,8 +10,7 @@ export const login = (id, displayname,photoURL,phoneNumber) =>{
         payload:{
             id,
             displayname,           
-            photoURL,
-            phoneNumber
+            
         }
     }
 }
@@ -58,6 +57,25 @@ export const loginEmailPassword = (email,password) => {
                 title: 'Oops...',
                 text: 'Usuario y/o contraseña incorrecta'
               })
+        })
+    }
+}
+
+export const logoutSincrono = () => {
+    return{
+        type: types.logout,
+    }
+ }
+export const logout = () => {
+
+    return(dispatch) => {
+        const auth = getAuth();
+        signOut(auth)
+        .then(user => {
+            dispatch(logoutSincrono())
+        })
+        .catch(error => {
+            console.log(error);
         })
     }
 }
