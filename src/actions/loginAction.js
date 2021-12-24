@@ -4,7 +4,7 @@ import Swal from "sweetalert2"
 import { facebook, google } from "../firebase/firebase"
 import { types } from "../types/types"
 
-export const login = (id, displayname,photoURL,phoneNumber) =>{
+export const login = (id, displayname) =>{
     return {
         type: types.login,
         payload:{
@@ -34,7 +34,7 @@ export const loginFacebook = () =>{
         signInWithPopup(auth,facebook)
         .then(({user})=>{
             console.log(user)
-            dispatch(login(user.uid, user.displayName, user.photoURL, user.phoneNumber))
+            dispatch(login(user.uid, user.displayName))
         })
         .catch(e=>{
             console.log(e)
@@ -47,8 +47,8 @@ export const loginEmailPassword = (email,password) => {
         const auth = getAuth()
         signInWithEmailAndPassword(auth, email, password)
         .then(({user})=>{
-            dispatch(login(user.uid, user.displayName, user.photoURL, user.phoneNumber))
-            console.log('Bienvenido' + user.displayName)
+            dispatch(login(user.uid, user.displayName))
+           
         })
         .catch(error => {
             console.log(error)

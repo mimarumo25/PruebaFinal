@@ -3,7 +3,7 @@ import { Card, FloatingLabel, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { loginEmailPassword } from '../../../actions/loginAction'
+import { registerEmailPassword } from '../../../actions/registerAction'
 
 
 export const Register = () => {
@@ -55,7 +55,7 @@ export const Register = () => {
 
                             onSubmit={(valores, { resetForm }) => {
                                 
-                               dispatch(loginEmailPassword(valores.names, valores.email, valores.password))
+                               dispatch(registerEmailPassword(valores.names, valores.email, valores.password))
                                 resetForm()                               
                                
                                 
