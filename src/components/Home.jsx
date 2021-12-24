@@ -1,3 +1,4 @@
+import { Alert } from 'bootstrap'
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,10 +13,13 @@ export default function Home() {
     let total = 0;
     let subtotal = 0;
     let item = 0
+    let subtotal1 =0
 
     const { product } = useSelector((store) => store.product);
     const { carrito } = useSelector((state) => state.carrito);
     const navigate = useNavigate();
+    const [selectAll, setSelectAll] = useState(false)
+    const [controlbtn, setControlbtn] = useState(false)
 
 
     const dispatch = useDispatch()
@@ -24,6 +28,7 @@ export default function Home() {
     });
     carrito?.forEach(dat => {
         subtotal = dat.price * dat.items;
+        subtotal1 +=subtotal
         total += subtotal;
         item += dat.items
 
@@ -42,10 +47,12 @@ export default function Home() {
             const prodAdd = product.ingredients.find(p => p.product === id)
             dispatch(carritoP(prodAdd))
 
+
         } else {
             console.log("No esta activo");
             let id = e.target.id
             const proUpdate = carrito.filter(pm => pm.product !== id)
+
             dispatch(carritoUdapte(proUpdate))
         }
     }
@@ -64,14 +71,24 @@ export default function Home() {
         })
     }
     const handelSelectTodos = () => {
+        setSelectAll(true)
+        setControlbtn(true)
+        const { ingredients } = product
+        ingredients?.forEach(dat => {
+            dispatch(carritoP(dat))
 
-        const check = document.getElementsByName("cant")
-        check.setAttribute("checked", true);
+        });
     }
     const handelDesTodos = () => {
-        alert("dest")
+       if(selectAll !==false){
+        setSelectAll(false)
+        setControlbtn(false)
+        dispatch(carritoUdapte([]))
+        console.log(carrito);
     }
-    const handleLoging = ()=>{
+   
+    }
+    const handleLoging = () => {
         dispatch(logout());
         navigate("/")
     }
@@ -92,7 +109,13 @@ export default function Home() {
                         <Card.Body>
 
                             <div>
-                                <h5 className='textoSelect text-center'><b className='select' onClick={handelSelectTodos}>Seleccionar todo</b><span className='h4 m-1'>|</span><b className='select' onClick={handelDesTodos}>Deseleccionar todo</b></h5>
+                                <h5 className='textoSelect text-center'>
+                                    {controlbtn === false ?
+                                        <b className='select' onClick={handelSelectTodos}>Seleccionar todo</b>
+                                        : <b className='select' >Seleccionar todo</b>}
+                                    <span className='h4 m-1'>|</span>
+                                    <b className='select' onClick={handelDesTodos}>Deseleccionar todo</b>
+                                </h5>
                             </div>
                             <div>
                                 <Table striped bordered hover size="sm">
@@ -110,6 +133,7 @@ export default function Home() {
                                                             type="checkbox"
                                                             className='m-4 form-check-input'
                                                             name='productCheck'
+                                                            checked={selectAll}
                                                             id={p.product}
                                                             onChange={handlechange}
                                                         />
@@ -117,7 +141,6 @@ export default function Home() {
                                                             <input type="number"
                                                                 className='form-control mt-3 text-center'
                                                                 min="1"
-                                                                checked='true'
                                                                 name={cant}
                                                                 value={cant}
                                                                 onChange={handleInputChange} />
@@ -148,7 +171,7 @@ export default function Home() {
                                         </div>
                                         <div className='py-1 d-flex justify-content-between'>
                                             <p>Subtotal: </p>
-                                            <h5>{subtotal}</h5>
+                                            <h5>{subtotal1}</h5>
                                         </div>
                                         <div className='py-1 d-flex justify-content-between'>
                                             <p>Costos de envio:</p>
